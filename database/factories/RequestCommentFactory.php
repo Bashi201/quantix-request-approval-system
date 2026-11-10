@@ -34,4 +34,3 @@ class RequestCommentFactory extends Factory
         ]);
     }
 }
-

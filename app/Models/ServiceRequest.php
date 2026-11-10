@@ -84,4 +84,3 @@ class ServiceRequest extends Model
         return $this->hasMany(RequestActivity::class);
     }
 }
-
