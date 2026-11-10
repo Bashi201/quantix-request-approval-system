@@ -58,4 +58,3 @@ class RequestStatusTest extends TestCase
         $this->assertSame('Rejected', RequestStatus::Rejected->label());
     }
 }
-

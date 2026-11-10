@@ -43,4 +43,3 @@ class UserRoleTest extends TestCase
         $this->assertTrue($ops->isOperations());
     }
 }
-
