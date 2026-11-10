@@ -144,3 +144,4 @@ class AuthTest extends TestCase
         $this->assertCount(0, $user->fresh()->tokens);
     }
 }
+
