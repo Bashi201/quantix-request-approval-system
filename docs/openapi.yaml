@@ -1,0 +1,327 @@
+openapi: 3.0.3
+info:
+  title: Quantix Service Request & Approval REST API
+  description: Multi-role Service Request & Approval platform built with Laravel 11+, Sanctum, and MySQL.
+  version: 1.0.0
+servers:
+  - url: http://localhost:8000/api
+    description: Local Development Server
+paths:
+  /login:
+    post:
+      summary: User Authentication
+      description: Issues a Sanctum personal access token for valid credentials.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [email, password]
+              properties:
+                email:
+                  type: string
+                  example: alice.dev@quantix.io
+                password:
+                  type: string
+                  example: password
+      responses:
+        '200':
+          description: Login successful
+        '422':
+          description: Validation error or invalid credentials
+  /logout:
+    post:
+      summary: User Logout
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Token revoked
+  /me:
+    get:
+      summary: Current User Profile
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Authenticated user details with direct manager information
+  /requests:
+    get:
+      summary: List Service Requests
+      description: Role-scoped list supporting filtering by status, category, search keyword, sorting, and pagination.
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: query
+          name: status
+          schema:
+            type: string
+          example: submitted
+        - in: query
+          name: category
+          schema:
+            type: string
+          example: Equipment
+        - in: query
+          name: search
+          schema:
+            type: string
+          example: Monitor
+        - in: query
+          name: page
+          schema:
+            type: integer
+          example: 1
+        - in: query
+          name: per_page
+          schema:
+            type: integer
+          example: 15
+      responses:
+        '200':
+          description: Paginated service request collection
+    post:
+      summary: Create Service Request
+      description: Employees can create a draft or submit immediately.
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [category, title, description, priority]
+              properties:
+                category:
+                  type: string
+                  example: Equipment
+                title:
+                  type: string
+                  example: Dual 4K Displays
+                description:
+                  type: string
+                  example: Professional development workstation screens.
+                priority:
+                  type: string
+                  enum: [low, medium, high, urgent]
+                  example: high
+                submit:
+                  type: boolean
+                  example: true
+      responses:
+        '201':
+          description: Created
+        '403':
+          description: Forbidden (Non-employees cannot create)
+  /requests/{id}:
+    get:
+      summary: Get Request Details
+      description: Returns full request data, including participant comments and audit history.
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Success
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+    put:
+      summary: Edit Service Request
+      description: Employees can edit their own requests only while in draft or returned status.
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Updated
+        '403':
+          description: Forbidden
+  /requests/{id}/submit:
+    post:
+      summary: Submit Request for Review
+      description: Employee submits draft or returned request.
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Submitted
+        '403':
+          description: Forbidden
+        '422':
+          description: Invalid transition
+  /requests/{id}/decision:
+    post:
+      summary: Manager Review Decision
+      description: Manager approves, returns (with mandatory comment), or rejects a direct report's request.
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [action]
+              properties:
+                action:
+                  type: string
+                  enum: [approve, reject, return]
+                  example: return
+                comment:
+                  type: string
+                  example: Please provide vendor quote.
+      responses:
+        '200':
+          description: Decision processed
+        '403':
+          description: Forbidden
+        '422':
+          description: Validation error or missing return comment
+  /requests/{id}/assign:
+    post:
+      summary: Operations Ticket Assignment
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [assigned_to_id]
+              properties:
+                assigned_to_id:
+                  type: integer
+                  example: 5
+      responses:
+        '200':
+          description: Assigned
+        '403':
+          description: Forbidden
+  /requests/{id}/status:
+    post:
+      summary: Operations Status Advancement
+      description: Operations moves ticket to in_progress or completed.
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [status]
+              properties:
+                status:
+                  type: string
+                  enum: [in_progress, completed]
+                  example: in_progress
+                comment:
+                  type: string
+                  example: Work commenced.
+      responses:
+        '200':
+          description: Status updated
+        '422':
+          description: Invalid status transition
+  /requests/{id}/comments:
+    post:
+      summary: Add Participant Comment
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [comment]
+              properties:
+                comment:
+                  type: string
+                  example: Hardware has arrived at reception.
+      responses:
+        '201':
+          description: Comment added
+        '403':
+          description: Forbidden
+  /notifications:
+    get:
+      summary: List In-App Notifications
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Success
+  /notifications/{id}/read:
+    patch:
+      summary: Mark Notification Read
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Marked as read
+  /notifications/read-all:
+    post:
+      summary: Mark All Notifications Read
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: All marked read
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: Sanctum

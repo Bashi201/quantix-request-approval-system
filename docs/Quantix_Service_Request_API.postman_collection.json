@@ -1,0 +1,419 @@
+{
+  "info": {
+    "_postman_id": "b3e94a82-f5c2-4011-88f1-8319e7a89201",
+    "name": "Quantix Service Request & Approval API",
+    "description": "Comprehensive RESTful API Collection for the Quantix SaaS Service Request & Approval Platform.\n\nIncludes complete role-based requests for Employees, Managers, and Operations Users.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:8000/api",
+      "type": "string"
+    },
+    {
+      "key": "token",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "requestId",
+      "value": "1",
+      "type": "string"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{token}}",
+        "type": "string"
+      }
+    ]
+  },
+  "item": [
+    {
+      "name": "01 - Authentication",
+      "item": [
+        {
+          "name": "Login - Employee (Alice Smith)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "var jsonData = pm.response.json();",
+                  "if (jsonData.data && jsonData.data.token) {",
+                  "    pm.collectionVariables.set('token', jsonData.data.token);",
+                  "    console.log('Token updated for Alice Smith');",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "auth": { "type": "noauth" },
+            "method": "POST",
+            "header": [
+              { "key": "Accept", "value": "application/json" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"alice.dev@quantix.io\",\n  \"password\": \"password\"\n}"
+            },
+            "url": "{{baseUrl}}/login"
+          }
+        },
+        {
+          "name": "Login - Manager (Sarah Connor)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "var jsonData = pm.response.json();",
+                  "if (jsonData.data && jsonData.data.token) {",
+                  "    pm.collectionVariables.set('token', jsonData.data.token);",
+                  "    console.log('Token updated for Sarah Connor');",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "auth": { "type": "noauth" },
+            "method": "POST",
+            "header": [
+              { "key": "Accept", "value": "application/json" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"sarah.manager@quantix.io\",\n  \"password\": \"password\"\n}"
+            },
+            "url": "{{baseUrl}}/login"
+          }
+        },
+        {
+          "name": "Login - Operations (Oscar Martinez)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "var jsonData = pm.response.json();",
+                  "if (jsonData.data && jsonData.data.token) {",
+                  "    pm.collectionVariables.set('token', jsonData.data.token);",
+                  "    console.log('Token updated for Oscar Martinez');",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "auth": { "type": "noauth" },
+            "method": "POST",
+            "header": [
+              { "key": "Accept", "value": "application/json" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"oscar.ops@quantix.io\",\n  \"password\": \"password\"\n}"
+            },
+            "url": "{{baseUrl}}/login"
+          }
+        },
+        {
+          "name": "Get Authenticated Profile (Me)",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Accept", "value": "application/json" }
+            ],
+            "url": "{{baseUrl}}/me"
+          }
+        },
+        {
+          "name": "Logout",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Accept", "value": "application/json" }
+            ],
+            "url": "{{baseUrl}}/logout"
+          }
+        }
+      ]
+    },
+    {
+      "name": "02 - Service Requests (Employee)",
+      "item": [
+        {
+          "name": "Create Request (Draft)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "var jsonData = pm.response.json();",
+                  "if (jsonData.data && jsonData.data.id) {",
+                  "    pm.collectionVariables.set('requestId', jsonData.data.id);",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Accept", "value": "application/json" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"category\": \"Equipment\",\n  \"title\": \"Dual 4K Monitor Setup\",\n  \"description\": \"Requesting two 27-inch 4K monitors for engineering workstation.\",\n  \"priority\": \"high\",\n  \"submit\": false\n}"
+            },
+            "url": "{{baseUrl}}/requests"
+          }
+        },
+        {
+          "name": "Create Request (Submit Directly)",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Accept", "value": "application/json" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"category\": \"Access Request\",\n  \"title\": \"AWS Production Logs Read Access\",\n  \"description\": \"Read-only CloudWatch IAM permissions to investigate latency spikes.\",\n  \"priority\": \"urgent\",\n  \"submit\": true\n}"
+            },
+            "url": "{{baseUrl}}/requests"
+          }
+        },
+        {
+          "name": "List Requests (Scoped by Role)",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Accept", "value": "application/json" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/requests?status=submitted&category=Equipment&page=1&per_page=15",
+              "host": ["{{baseUrl}}"],
+              "path": ["requests"],
+              "query": [
+                { "key": "status", "value": "submitted" },
+                { "key": "category", "value": "Equipment" },
+                { "key": "page", "value": "1" },
+                { "key": "per_page", "value": "15" }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Request Details with Activity & Comments",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Accept", "value": "application/json" }
+            ],
+            "url": "{{baseUrl}}/requests/{{requestId}}"
+          }
+        },
+        {
+          "name": "Update Request (Draft or Returned)",
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Accept", "value": "application/json" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"Dual 4K Monitor Setup (Updated Specs)\",\n  \"description\": \"Two 27-inch 4K USB-C monitors with hub. Estimated cost: $1,100.\",\n  \"priority\": \"high\"\n}"
+            },
+            "url": "{{baseUrl}}/requests/{{requestId}}"
+          }
+        },
+        {
+          "name": "Submit Draft / Returned Request",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Accept", "value": "application/json" }
+            ],
+            "url": "{{baseUrl}}/requests/{{requestId}}/submit"
+          }
+        },
+        {
+          "name": "Add Participant Comment",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Accept", "value": "application/json" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"comment\": \"Has the PO been approved by procurement yet?\"\n}"
+            },
+            "url": "{{baseUrl}}/requests/{{requestId}}/comments"
+          }
+        }
+      ]
+    },
+    {
+      "name": "03 - Manager Decisions",
+      "item": [
+        {
+          "name": "Approve Request",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Accept", "value": "application/json" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"action\": \"approve\",\n  \"comment\": \"Approved under department budget.\"\n}"
+            },
+            "url": "{{baseUrl}}/requests/{{requestId}}/decision"
+          }
+        },
+        {
+          "name": "Return Request with Comment",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Accept", "value": "application/json" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"action\": \"return\",\n  \"comment\": \"Please specify the department cost center code.\"\n}"
+            },
+            "url": "{{baseUrl}}/requests/{{requestId}}/decision"
+          }
+        },
+        {
+          "name": "Reject Request",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Accept", "value": "application/json" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"action\": \"reject\",\n  \"comment\": \"Does not meet hardware standard eligibility.\"\n}"
+            },
+            "url": "{{baseUrl}}/requests/{{requestId}}/decision"
+          }
+        }
+      ]
+    },
+    {
+      "name": "04 - Operations Fulfillment",
+      "item": [
+        {
+          "name": "List Operations Staff Directory",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Accept", "value": "application/json" }
+            ],
+            "url": "{{baseUrl}}/users/operations"
+          }
+        },
+        {
+          "name": "Assign Request to Engineer",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Accept", "value": "application/json" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"assigned_to_id\": 5\n}"
+            },
+            "url": "{{baseUrl}}/requests/{{requestId}}/assign"
+          }
+        },
+        {
+          "name": "Start Work (Status: in_progress)",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Accept", "value": "application/json" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"in_progress\",\n  \"comment\": \"Hardware arrived. Preparing workstation desk setup.\"\n}"
+            },
+            "url": "{{baseUrl}}/requests/{{requestId}}/status"
+          }
+        },
+        {
+          "name": "Complete Request (Status: completed)",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Accept", "value": "application/json" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"completed\",\n  \"comment\": \"Displays deployed and verified at desk 3B.\"\n}"
+            },
+            "url": "{{baseUrl}}/requests/{{requestId}}/status"
+          }
+        }
+      ]
+    },
+    {
+      "name": "05 - In-App Notifications",
+      "item": [
+        {
+          "name": "List Notifications",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Accept", "value": "application/json" }
+            ],
+            "url": "{{baseUrl}}/notifications"
+          }
+        },
+        {
+          "name": "Mark Notification as Read",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              { "key": "Accept", "value": "application/json" }
+            ],
+            "url": "{{baseUrl}}/notifications/:id/read"
+          }
+        },
+        {
+          "name": "Mark All Notifications as Read",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Accept", "value": "application/json" }
+            ],
+            "url": "{{baseUrl}}/notifications/read-all"
+          }
+        }
+      ]
+    }
+  ]
+}
