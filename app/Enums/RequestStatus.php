@@ -16,7 +16,7 @@ enum RequestStatus: string
     {
         return match ($this) {
             self::Draft => 'Draft',
-            self::Submitted => 'Submitted',
+            self::Submitted => 'Pending Approval',
             self::Returned => 'Returned',
             self::Approved => 'Approved',
             self::InProgress => 'In Progress',
@@ -39,6 +39,20 @@ enum RequestStatus: string
     public function isEditable(): bool
     {
         return in_array($this, [self::Draft, self::Returned], true);
+    }
+
+    /**
+     * Resolve status from raw string or common alias (e.g. pending_approval).
+     */
+    public static function fromValueOrAlias(string $value): ?self
+    {
+        $normalized = strtolower(trim($value));
+
+        if ($normalized === 'pending_approval' || $normalized === 'pending approval' || $normalized === 'pending-approval') {
+            return self::Submitted;
+        }
+
+        return self::tryFrom($normalized);
     }
 
     /**
