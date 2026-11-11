@@ -210,3 +210,4 @@ class NotificationDispatchTest extends TestCase
         $allReadResponse->assertStatus(200);
     }
 }
+
