@@ -1,17 +1,14 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { useAuth } from '@/context/AuthContext';
 import {
   LayoutDashboard,
   FileText,
-  PlusCircle,
   CheckSquare,
   Users,
   X,
-  Sparkles,
   Inbox,
   Clock,
-  CheckCircle2,
 } from 'lucide-react';
 
 interface SidebarProps {
@@ -20,12 +17,44 @@ interface SidebarProps {
 }
 
 export const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
-  const { user, role, isEmployee, isManager, isOperations } = useAuth();
+  const { isEmployee, isManager, isOperations } = useAuth();
+  const location = useLocation();
 
-  const navItemClass = ({ isActive }: { isActive: boolean }) =>
-    `flex items-center gap-3 px-3 py-2.5 rounded-lg text-xs sm:text-sm font-medium transition-colors ${
+  const currentPath = location.pathname;
+  const currentSearch = location.search;
+
+  // Mutually-exclusive tab active checks
+  const isDashboardActive = currentPath === '/';
+
+  // Employee checks
+  const isEmployeeRequestsActive = currentPath === '/requests' || currentPath.startsWith('/requests/');
+
+  // Manager checks
+  const isPendingApprovalsActive =
+    currentPath === '/requests' && currentSearch.includes('status=submitted');
+  const isTeamRequestsActive =
+    (currentPath === '/requests' && !currentSearch.includes('status=submitted')) ||
+    (currentPath.startsWith('/requests/') && !isPendingApprovalsActive);
+  const isManagerOpsStaffActive = currentPath.startsWith('/users/operations');
+
+  // Operations checks
+  const isOpsUnassignedActive =
+    currentPath === '/requests' && currentSearch.includes('status=approved');
+  const isOpsInProgressActive =
+    currentPath === '/requests' && currentSearch.includes('status=in_progress');
+  const isOpsAllOrdersActive =
+    (currentPath === '/requests' &&
+      !currentSearch.includes('status=approved') &&
+      !currentSearch.includes('status=in_progress')) ||
+    (currentPath.startsWith('/requests/') &&
+      !isOpsUnassignedActive &&
+      !isOpsInProgressActive);
+  const isOpsTeamActive = currentPath.startsWith('/users/operations');
+
+  const getLinkClass = (isActive: boolean) =>
+    `flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs sm:text-sm font-medium transition-all ${
       isActive
-        ? 'bg-indigo-50 text-indigo-700 font-semibold'
+        ? 'bg-indigo-50 text-indigo-700 font-bold border-l-4 border-indigo-600 shadow-xs'
         : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900'
     }`;
 
@@ -35,123 +64,124 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
       {isOpen && (
         <div
           onClick={onClose}
-          className="fixed inset-0 bg-slate-900/40 backdrop-blur-xs z-40 lg:hidden"
+          className="fixed inset-0 bg-slate-900/50 backdrop-blur-xs z-40 lg:hidden"
         />
       )}
 
-      {/* Sidebar container */}
+      {/* Sidebar: sticky on desktop, drawer on mobile */}
       <aside
-        className={`fixed top-0 bottom-0 left-0 z-50 w-64 bg-white border-r border-slate-200 flex flex-col transition-transform duration-200 lg:translate-x-0 ${
+        className={`fixed inset-y-0 left-0 z-50 w-64 bg-white border-r border-slate-200 flex flex-col transition-transform duration-200 lg:translate-x-0 ${
           isOpen ? 'translate-x-0' : '-translate-x-full'
-        } lg:static lg:h-[calc(100vh-4rem)]`}
+        } lg:sticky lg:top-16 lg:h-[calc(100vh-4rem)] shrink-0`}
       >
-        <div className="flex items-center justify-between p-4 border-b border-slate-100 lg:hidden">
-          <span className="font-bold text-slate-800 text-sm">Navigation Menu</span>
-          <button onClick={onClose} className="p-1 text-slate-400 hover:text-slate-600">
+        {/* Mobile Header */}
+        <div className="flex items-center justify-between p-4 border-b border-slate-200 lg:hidden bg-slate-50">
+          <span className="font-bold text-slate-800 text-sm">Navigation</span>
+          <button
+            onClick={onClose}
+            className="p-1.5 text-slate-500 hover:text-slate-800 hover:bg-slate-200/60 rounded-lg transition"
+          >
             <X className="w-5 h-5" />
           </button>
         </div>
 
-        {/* Current Persona Badge */}
-        <div className="p-4 border-b border-slate-100 bg-slate-50/50">
-          <p className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider">
-            Active Workspace
-          </p>
-          <div className="flex items-center justify-between mt-1">
-            <span className="text-xs font-bold text-slate-800 truncate">{user?.name}</span>
-            <span
-              className={`text-[10px] uppercase font-bold px-1.5 py-0.5 rounded ${
-                isEmployee
-                  ? 'bg-blue-100 text-blue-700'
-                  : isManager
-                  ? 'bg-indigo-100 text-indigo-700'
-                  : 'bg-emerald-100 text-emerald-700'
-              }`}
-            >
-              {role}
-            </span>
-          </div>
-        </div>
-
-        {/* Role-Specific Nav Links */}
+        {/* Navigation Links */}
         <nav className="flex-1 p-3 space-y-1 overflow-y-auto">
-          {/* Dashboard link for all */}
-          <NavLink to="/" className={navItemClass} onClick={onClose} end>
-            <LayoutDashboard className="w-4 h-4 shrink-0 text-slate-400" />
-            Dashboard
-          </NavLink>
+          {/* Dashboard link for all roles */}
+          <Link
+            to="/"
+            className={getLinkClass(isDashboardActive)}
+            onClick={onClose}
+          >
+            <LayoutDashboard className={`w-4 h-4 shrink-0 ${isDashboardActive ? 'text-indigo-600' : 'text-slate-400'}`} />
+            <span>Dashboard</span>
+          </Link>
 
           {/* Employee Navigation */}
           {isEmployee && (
-            <>
-              <NavLink to="/requests" className={navItemClass} onClick={onClose}>
-                <FileText className="w-4 h-4 shrink-0 text-slate-400" />
-                My Service Requests
-              </NavLink>
-
-              <NavLink to="/requests/new" className={navItemClass} onClick={onClose}>
-                <PlusCircle className="w-4 h-4 shrink-0 text-indigo-600" />
-                New Service Request
-              </NavLink>
-            </>
+            <Link
+              to="/requests"
+              className={getLinkClass(isEmployeeRequestsActive)}
+              onClick={onClose}
+            >
+              <FileText className={`w-4 h-4 shrink-0 ${isEmployeeRequestsActive ? 'text-indigo-600' : 'text-slate-400'}`} />
+              <span>My Service Requests</span>
+            </Link>
           )}
 
           {/* Manager Navigation */}
           {isManager && (
             <>
-              <NavLink to="/requests?status=submitted" className={navItemClass} onClick={onClose}>
-                <CheckSquare className="w-4 h-4 shrink-0 text-amber-600" />
-                Pending Approvals
-              </NavLink>
+              <Link
+                to="/requests?status=submitted"
+                className={getLinkClass(isPendingApprovalsActive)}
+                onClick={onClose}
+              >
+                <CheckSquare className={`w-4 h-4 shrink-0 ${isPendingApprovalsActive ? 'text-amber-600' : 'text-slate-400'}`} />
+                <span>Pending Approvals</span>
+              </Link>
 
-              <NavLink to="/requests" className={navItemClass} onClick={onClose}>
-                <FileText className="w-4 h-4 shrink-0 text-slate-400" />
-                Team Requests
-              </NavLink>
+              <Link
+                to="/requests"
+                className={getLinkClass(isTeamRequestsActive)}
+                onClick={onClose}
+              >
+                <FileText className={`w-4 h-4 shrink-0 ${isTeamRequestsActive ? 'text-indigo-600' : 'text-slate-400'}`} />
+                <span>Team Requests</span>
+              </Link>
 
-              <NavLink to="/users/operations" className={navItemClass} onClick={onClose}>
-                <Users className="w-4 h-4 shrink-0 text-slate-400" />
-                Operations Staff
-              </NavLink>
+              <Link
+                to="/users/operations"
+                className={getLinkClass(isManagerOpsStaffActive)}
+                onClick={onClose}
+              >
+                <Users className={`w-4 h-4 shrink-0 ${isManagerOpsStaffActive ? 'text-indigo-600' : 'text-slate-400'}`} />
+                <span>Operations Staff</span>
+              </Link>
             </>
           )}
 
           {/* Operations Navigation */}
           {isOperations && (
             <>
-              <NavLink to="/requests?status=approved" className={navItemClass} onClick={onClose}>
-                <Inbox className="w-4 h-4 shrink-0 text-amber-600" />
-                Unassigned Queue
-              </NavLink>
+              <Link
+                to="/requests?status=approved"
+                className={getLinkClass(isOpsUnassignedActive)}
+                onClick={onClose}
+              >
+                <Inbox className={`w-4 h-4 shrink-0 ${isOpsUnassignedActive ? 'text-amber-600' : 'text-slate-400'}`} />
+                <span>Unassigned Queue</span>
+              </Link>
 
-              <NavLink to="/requests?status=in_progress" className={navItemClass} onClick={onClose}>
-                <Clock className="w-4 h-4 shrink-0 text-blue-600" />
-                In Progress Work
-              </NavLink>
+              <Link
+                to="/requests?status=in_progress"
+                className={getLinkClass(isOpsInProgressActive)}
+                onClick={onClose}
+              >
+                <Clock className={`w-4 h-4 shrink-0 ${isOpsInProgressActive ? 'text-blue-600' : 'text-slate-400'}`} />
+                <span>In Progress Work</span>
+              </Link>
 
-              <NavLink to="/requests" className={navItemClass} onClick={onClose}>
-                <FileText className="w-4 h-4 shrink-0 text-slate-400" />
-                All Fulfillment Orders
-              </NavLink>
+              <Link
+                to="/requests"
+                className={getLinkClass(isOpsAllOrdersActive)}
+                onClick={onClose}
+              >
+                <FileText className={`w-4 h-4 shrink-0 ${isOpsAllOrdersActive ? 'text-indigo-600' : 'text-slate-400'}`} />
+                <span>All Fulfillment Orders</span>
+              </Link>
 
-              <NavLink to="/users/operations" className={navItemClass} onClick={onClose}>
-                <Users className="w-4 h-4 shrink-0 text-emerald-600" />
-                Operations Team
-              </NavLink>
+              <Link
+                to="/users/operations"
+                className={getLinkClass(isOpsTeamActive)}
+                onClick={onClose}
+              >
+                <Users className={`w-4 h-4 shrink-0 ${isOpsTeamActive ? 'text-emerald-600' : 'text-slate-400'}`} />
+                <span>Operations Team</span>
+              </Link>
             </>
           )}
         </nav>
-
-        {/* Quick Reviewer Demo Helper Box */}
-        <div className="p-3 m-3 bg-gradient-to-br from-indigo-50 to-slate-50 border border-indigo-100 rounded-xl text-xs text-slate-600">
-          <div className="flex items-center gap-1.5 font-semibold text-indigo-900 text-xs mb-1">
-            <Sparkles className="w-3.5 h-3.5 text-indigo-600" />
-            Reviewer Sandbox
-          </div>
-          <p className="text-[11px] text-slate-500 leading-snug">
-            All seeded users use password <code className="bg-white px-1 py-0.5 rounded border">password</code>.
-          </p>
-        </div>
       </aside>
     </>
   );
