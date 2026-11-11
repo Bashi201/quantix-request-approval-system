@@ -10,6 +10,8 @@ This document specifies the architectural blueprint for the **Quantix Service Re
 
 ## 2. High-Level Architectural Diagram
 
+![System Architecture](Service%20Request%20System%20Architecture.png)
+
 ```mermaid
 graph TD
     subgraph ClientLayer["Frontend Client Layer (Vite + React SPA)"]

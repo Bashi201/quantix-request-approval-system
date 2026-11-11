@@ -15,6 +15,8 @@ This document defines the relational database architecture for the **Quantix Ser
 
 ## 2. Entity-Relationship Diagram (ERD)
 
+![Database ERD](Service%20Request%20System%20ERD.png)
+
 ```mermaid
 erDiagram
     users ||--o{ users : "manages (manager_id)"
