@@ -58,13 +58,13 @@ export const EmployeeDashboard: React.FC = () => {
   return (
     <div className="space-y-6">
       {/* Welcome Banner */}
-      <div className="bg-gradient-to-r from-indigo-700 via-indigo-600 to-indigo-800 rounded-2xl p-6 sm:p-8 text-white shadow-md flex flex-col sm:flex-row sm:items-center justify-between gap-6 border border-indigo-500/30">
+      <div className="bg-gradient-to-r from-indigo-700 via-indigo-600 to-indigo-800 rounded-2xl p-4 sm:p-6 lg:p-8 text-white shadow-md flex flex-col sm:flex-row sm:items-center justify-between gap-4 sm:gap-6 border border-indigo-500/30">
         <div>
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/15 text-indigo-100 text-xs font-semibold backdrop-blur-xs mb-3 border border-white/20">
+          <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 sm:px-3 sm:py-1 rounded-full bg-white/15 text-indigo-100 text-[11px] sm:text-xs font-semibold backdrop-blur-xs mb-2 sm:mb-3 border border-white/20">
             <UserCheck className="w-3.5 h-3.5" />
             Reporting to: {user?.manager ? user.manager.name : 'Unassigned Manager'}
           </div>
-          <h1 className="text-xl sm:text-2xl font-bold tracking-tight">
+          <h1 className="text-lg sm:text-2xl font-bold tracking-tight">
             Welcome back, {user?.name}
           </h1>
           <p className="text-indigo-100 text-xs sm:text-sm mt-1 max-w-xl leading-relaxed">
@@ -76,7 +76,7 @@ export const EmployeeDashboard: React.FC = () => {
         <button
           type="button"
           onClick={openCreateModal}
-          className="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl bg-white text-indigo-700 font-bold text-sm hover:bg-indigo-50 shadow-md hover:shadow-lg transition-all shrink-0 cursor-pointer"
+          className="inline-flex items-center justify-center gap-2 px-4 sm:px-5 py-2.5 sm:py-3 rounded-xl bg-white text-indigo-700 font-bold text-xs sm:text-sm hover:bg-indigo-50 shadow-md hover:shadow-lg transition-all shrink-0 cursor-pointer w-full sm:w-auto"
         >
           <PlusCircle className="w-4 h-4" />
           Create New Request
@@ -85,33 +85,33 @@ export const EmployeeDashboard: React.FC = () => {
 
       {/* Action Required Alert: Returned Requests */}
       {returnedRequests.length > 0 && (
-        <div className="bg-amber-50/90 border-2 border-amber-300 rounded-2xl p-5 shadow-sm">
-          <div className="flex items-start gap-3.5">
-            <div className="p-2.5 bg-amber-100 text-amber-800 rounded-xl shrink-0">
-              <AlertTriangle className="w-5 h-5" />
+        <div className="bg-amber-50/90 border-2 border-amber-300 rounded-2xl p-4 sm:p-5 shadow-sm">
+          <div className="flex items-start gap-3 sm:gap-3.5">
+            <div className="p-2 sm:p-2.5 bg-amber-100 text-amber-800 rounded-xl shrink-0">
+              <AlertTriangle className="w-4 h-4 sm:w-5 sm:h-5" />
             </div>
             <div className="flex-1 min-w-0">
-              <h2 className="text-sm font-bold text-amber-950">
+              <h2 className="text-xs sm:text-sm font-bold text-amber-950">
                 Action Required: {returnedRequests.length} Request{returnedRequests.length > 1 ? 's' : ''} Returned for Revision
               </h2>
-              <p className="text-xs text-amber-800 mt-0.5">
+              <p className="text-[11px] sm:text-xs text-amber-800 mt-0.5">
                 Your manager requested adjustments before approval can proceed.
               </p>
 
-              <div className="mt-3.5 space-y-2">
+              <div className="mt-3 space-y-2">
                 {returnedRequests.map((req) => (
                   <div
                     key={req.id}
-                    className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-3.5 bg-white rounded-xl border border-amber-200 shadow-xs text-xs"
+                    className="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 sm:gap-3 p-3 sm:p-3.5 bg-white rounded-xl border border-amber-200 shadow-xs text-xs"
                   >
                     <div className="space-y-1">
-                      <div className="flex items-center gap-2.5">
-                        <span className="font-mono font-bold text-indigo-700 bg-indigo-50 px-2 py-0.5 rounded border border-indigo-200">
+                      <div className="flex items-center gap-2">
+                        <span className="font-mono font-bold text-indigo-700 bg-indigo-50 px-1.5 py-0.5 rounded border border-indigo-200 text-[11px]">
                           {req.request_number}
                         </span>
                         <span className="font-bold text-slate-900 truncate">{req.title}</span>
                       </div>
-                      <p className="text-slate-600 text-[11px]">
+                      <p className="text-slate-600 text-[10px] sm:text-[11px]">
                         Category: <span className="font-medium text-slate-800">{req.category}</span> • Priority:{' '}
                         <span className="capitalize font-medium text-slate-800">{req.priority}</span>
                       </p>
@@ -143,57 +143,57 @@ export const EmployeeDashboard: React.FC = () => {
       )}
 
       {/* Metrics Row */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        <div className="bg-white p-5 rounded-xl border border-slate-200 shadow-sm hover:border-slate-300 transition">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
+        <div className="bg-white p-3.5 sm:p-5 rounded-xl border border-slate-200 shadow-sm hover:border-slate-300 transition">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-bold text-slate-600 uppercase tracking-wider">
+            <span className="text-[10px] sm:text-xs font-bold text-slate-600 uppercase tracking-wider">
               Total Requests
             </span>
-            <div className="p-2.5 rounded-lg bg-indigo-50 text-indigo-600">
-              <FileText className="w-4 h-4" />
+            <div className="p-2 sm:p-2.5 rounded-lg bg-indigo-50 text-indigo-600">
+              <FileText className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
             </div>
           </div>
-          <p className="text-3xl font-extrabold text-slate-900 mt-2">{totalCount}</p>
-          <p className="text-[11px] text-slate-500 mt-1">Submitted in your account</p>
+          <p className="text-2xl sm:text-3xl font-extrabold text-slate-900 mt-1 sm:mt-2">{totalCount}</p>
+          <p className="text-[10px] sm:text-[11px] text-slate-500 mt-0.5 sm:mt-1 truncate">Submitted in account</p>
         </div>
 
-        <div className="bg-white p-5 rounded-xl border border-slate-200 shadow-sm hover:border-slate-300 transition">
+        <div className="bg-white p-3.5 sm:p-5 rounded-xl border border-slate-200 shadow-sm hover:border-slate-300 transition">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-bold text-slate-600 uppercase tracking-wider">
+            <span className="text-[10px] sm:text-xs font-bold text-slate-600 uppercase tracking-wider">
               Pending Review
             </span>
-            <div className="p-2.5 rounded-lg bg-amber-50 text-amber-600">
-              <Clock className="w-4 h-4" />
+            <div className="p-2 sm:p-2.5 rounded-lg bg-amber-50 text-amber-600">
+              <Clock className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
             </div>
           </div>
-          <p className="text-3xl font-extrabold text-slate-900 mt-2">{pendingCount}</p>
-          <p className="text-[11px] text-amber-700 font-medium mt-1">Awaiting manager decision</p>
+          <p className="text-2xl sm:text-3xl font-extrabold text-slate-900 mt-1 sm:mt-2">{pendingCount}</p>
+          <p className="text-[10px] sm:text-[11px] text-amber-700 font-medium mt-0.5 sm:mt-1 truncate">Awaiting manager</p>
         </div>
 
-        <div className="bg-white p-5 rounded-xl border border-slate-200 shadow-sm hover:border-slate-300 transition">
+        <div className="bg-white p-3.5 sm:p-5 rounded-xl border border-slate-200 shadow-sm hover:border-slate-300 transition">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-bold text-slate-600 uppercase tracking-wider">
+            <span className="text-[10px] sm:text-xs font-bold text-slate-600 uppercase tracking-wider">
               In Progress
             </span>
-            <div className="p-2.5 rounded-lg bg-blue-50 text-blue-600">
-              <Clock className="w-4 h-4" />
+            <div className="p-2 sm:p-2.5 rounded-lg bg-blue-50 text-blue-600">
+              <Clock className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
             </div>
           </div>
-          <p className="text-3xl font-extrabold text-slate-900 mt-2">{inProgressCount}</p>
-          <p className="text-[11px] text-slate-500 mt-1">Operations team fulfilling</p>
+          <p className="text-2xl sm:text-3xl font-extrabold text-slate-900 mt-1 sm:mt-2">{inProgressCount}</p>
+          <p className="text-[10px] sm:text-[11px] text-slate-500 mt-0.5 sm:mt-1 truncate">Operations fulfilling</p>
         </div>
 
-        <div className="bg-white p-5 rounded-xl border border-slate-200 shadow-sm hover:border-slate-300 transition">
+        <div className="bg-white p-3.5 sm:p-5 rounded-xl border border-slate-200 shadow-sm hover:border-slate-300 transition">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-bold text-slate-600 uppercase tracking-wider">
+            <span className="text-[10px] sm:text-xs font-bold text-slate-600 uppercase tracking-wider">
               Completed
             </span>
-            <div className="p-2.5 rounded-lg bg-emerald-50 text-emerald-600">
-              <CheckCircle2 className="w-4 h-4" />
+            <div className="p-2 sm:p-2.5 rounded-lg bg-emerald-50 text-emerald-600">
+              <CheckCircle2 className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
             </div>
           </div>
-          <p className="text-3xl font-extrabold text-slate-900 mt-2">{completedCount}</p>
-          <p className="text-[11px] text-slate-500 mt-1">Fulfilled successfully</p>
+          <p className="text-2xl sm:text-3xl font-extrabold text-slate-900 mt-1 sm:mt-2">{completedCount}</p>
+          <p className="text-[10px] sm:text-[11px] text-slate-500 mt-0.5 sm:mt-1 truncate">Fulfilled successfully</p>
         </div>
       </div>
 

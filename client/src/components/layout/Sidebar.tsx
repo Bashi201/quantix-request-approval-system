@@ -12,6 +12,7 @@ import {
   ChevronRight,
   ShieldCheck,
   Activity,
+  Layers,
 } from 'lucide-react';
 
 interface SidebarProps {
@@ -58,14 +59,14 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
   const getLinkClasses = (isActive: boolean) =>
     `group flex items-center justify-between px-3 py-2.5 rounded-xl text-xs sm:text-sm font-medium transition-all duration-150 ${
       isActive
-        ? 'bg-white text-indigo-700 font-bold border-l-4 border-indigo-600 shadow-xs ring-1 ring-slate-900/5'
-        : 'text-slate-600 hover:text-slate-900 hover:bg-white/80 hover:shadow-2xs'
+        ? 'bg-indigo-50/90 text-indigo-700 font-bold border-l-4 border-indigo-600 shadow-xs ring-1 ring-slate-900/5'
+        : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50'
     }`;
 
   const getIconWrapper = (isActive: boolean, accentColor = 'indigo') =>
     `w-7 h-7 rounded-lg flex items-center justify-center shrink-0 transition-colors ${
       isActive
-        ? `bg-${accentColor}-50 text-${accentColor}-600`
+        ? `bg-${accentColor}-100/80 text-${accentColor}-700`
         : 'bg-transparent text-slate-400 group-hover:text-slate-600'
     }`;
 
@@ -75,38 +76,48 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
       {isOpen && (
         <div
           onClick={onClose}
-          className="fixed inset-0 bg-slate-900/50 backdrop-blur-xs z-40 lg:hidden"
+          className="fixed inset-0 bg-slate-950/60 backdrop-blur-xs z-40 lg:hidden"
         />
       )}
 
-      {/* Sidebar: sticky on desktop, drawer on mobile */}
+      {/* Sidebar: solid white on both mobile & desktop */}
       <aside
-        className={`fixed inset-y-0 left-0 z-50 w-64 bg-slate-50/70 backdrop-blur-md border-r border-slate-200/90 flex flex-col justify-between transition-transform duration-200 lg:translate-x-0 ${
+        className={`fixed inset-y-0 left-0 z-50 w-64 bg-white border-r border-slate-200 flex flex-col justify-between transition-transform duration-200 shadow-2xl lg:shadow-none lg:translate-x-0 ${
           isOpen ? 'translate-x-0' : '-translate-x-full'
         } lg:sticky lg:top-16 lg:h-[calc(100vh-4rem)] shrink-0 select-none`}
       >
         {/* Top Section */}
         <div className="flex flex-col flex-1 min-h-0">
-          {/* Mobile Header */}
-          <div className="flex items-center justify-between p-4 border-b border-slate-200 lg:hidden bg-white">
-            <div className="flex items-center gap-2">
-              <span className="w-2 h-2 rounded-full bg-indigo-600" />
-              <span className="font-extrabold text-slate-800 text-sm">Navigation</span>
+          {/* Mobile Brand Drawer Header (Replaces generic "Navigation") */}
+          <div className="flex items-center justify-between p-4 border-b border-slate-200 lg:hidden bg-slate-50/70">
+            <div className="flex items-center gap-2.5">
+              <div className="w-8 h-8 rounded-xl bg-gradient-to-tr from-indigo-600 via-indigo-600 to-violet-500 text-white flex items-center justify-center shadow-xs">
+                <Layers className="w-4 h-4" />
+              </div>
+              <div className="flex flex-col">
+                <span className="font-extrabold text-sm text-slate-900 leading-none">
+                  Quantix Enterprise
+                </span>
+                <span className="text-[10px] text-slate-500 font-semibold capitalize mt-0.5">
+                  {role} Workspace
+                </span>
+              </div>
             </div>
             <button
               onClick={onClose}
-              className="p-1.5 text-slate-400 hover:text-slate-700 hover:bg-slate-100 rounded-lg transition"
+              className="p-1.5 text-slate-400 hover:text-slate-700 hover:bg-slate-200/60 rounded-lg transition"
+              aria-label="Close menu"
             >
               <X className="w-5 h-5" />
             </button>
           </div>
 
-          {/* Section Label */}
+          {/* Section Label (Desktop & Mobile) */}
           <div className="px-4 pt-4 pb-2 flex items-center justify-between">
             <span className="text-[10px] font-extrabold uppercase tracking-widest text-slate-400">
               Workspace Directory
             </span>
-            <span className="text-[9px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded bg-indigo-50/80 text-indigo-700 border border-indigo-100">
+            <span className="text-[9px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded bg-indigo-50 text-indigo-700 border border-indigo-100">
               {role || 'Role'}
             </span>
           </div>
@@ -272,7 +283,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
         </div>
 
         {/* Bottom Status Card */}
-        <div className="p-3 m-3 rounded-2xl bg-white border border-slate-200/90 shadow-2xs">
+        <div className="p-3 m-3 rounded-2xl bg-slate-50 border border-slate-200/90 shadow-2xs">
           <div className="flex items-center justify-between mb-1.5">
             <div className="flex items-center gap-2">
               <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
@@ -280,7 +291,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
             </div>
             <span className="text-[10px] font-mono font-semibold text-slate-400">v2.4</span>
           </div>
-          <div className="flex items-center justify-between text-[10px] text-slate-500 pt-1 border-t border-slate-100">
+          <div className="flex items-center justify-between text-[10px] text-slate-500 pt-1 border-t border-slate-200/60">
             <span className="flex items-center gap-1">
               <ShieldCheck className="w-3 h-3 text-indigo-600" />
               ISO 27001 RBAC

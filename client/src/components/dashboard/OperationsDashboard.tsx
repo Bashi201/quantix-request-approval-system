@@ -154,13 +154,13 @@ export const OperationsDashboard: React.FC = () => {
   return (
     <div className="space-y-6">
       {/* Welcome Banner */}
-      <div className="bg-gradient-to-r from-emerald-800 via-teal-700 to-emerald-900 rounded-2xl p-6 sm:p-8 text-white shadow-md flex flex-col sm:flex-row sm:items-center justify-between gap-6 border border-emerald-600/30">
+      <div className="bg-gradient-to-r from-emerald-800 via-teal-700 to-emerald-900 rounded-2xl p-4 sm:p-6 lg:p-8 text-white shadow-md flex flex-col sm:flex-row sm:items-center justify-between gap-4 sm:gap-6 border border-emerald-600/30">
         <div>
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/15 text-emerald-100 text-xs font-semibold backdrop-blur-xs mb-3 border border-white/20">
+          <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 sm:px-3 sm:py-1 rounded-full bg-white/15 text-emerald-100 text-[11px] sm:text-xs font-semibold backdrop-blur-xs mb-2 sm:mb-3 border border-white/20">
             <Wrench className="w-3.5 h-3.5" />
             Operations Fulfillment Center
           </div>
-          <h1 className="text-xl sm:text-2xl font-bold tracking-tight">
+          <h1 className="text-lg sm:text-2xl font-bold tracking-tight">
             Operations Workspace — {user?.name}
           </h1>
           <p className="text-emerald-100 text-xs sm:text-sm mt-1 max-w-xl leading-relaxed">
@@ -168,64 +168,64 @@ export const OperationsDashboard: React.FC = () => {
           </p>
         </div>
 
-        <div className="bg-white/15 backdrop-blur-xs border border-white/25 px-6 py-3.5 rounded-2xl text-center shrink-0 shadow-xs">
-          <p className="text-3xl font-extrabold text-white">{unassignedRequests.length}</p>
-          <p className="text-xs text-emerald-100 font-semibold mt-0.5">Unassigned In Queue</p>
+        <div className="bg-white/15 backdrop-blur-xs border border-white/25 px-4 sm:px-6 py-2.5 sm:py-3.5 rounded-2xl text-center shrink-0 shadow-xs flex sm:flex-col items-center justify-between sm:justify-center">
+          <p className="text-2xl sm:text-3xl font-extrabold text-white">{unassignedRequests.length}</p>
+          <p className="text-[11px] sm:text-xs text-emerald-100 font-semibold mt-0.5">Unassigned In Queue</p>
         </div>
       </div>
 
       {/* Metrics Row */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        <div className="bg-white p-5 rounded-xl border border-slate-200 shadow-sm hover:border-slate-300 transition">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
+        <div className="bg-white p-3.5 sm:p-5 rounded-xl border border-slate-200 shadow-sm hover:border-slate-300 transition">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-bold text-slate-600 uppercase tracking-wider">
+            <span className="text-[10px] sm:text-xs font-bold text-slate-600 uppercase tracking-wider">
               Awaiting Assignment
             </span>
-            <div className="p-2.5 rounded-lg bg-amber-50 text-amber-600">
-              <UserPlus className="w-4 h-4" />
+            <div className="p-2 sm:p-2.5 rounded-lg bg-amber-50 text-amber-600">
+              <UserPlus className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
             </div>
           </div>
-          <p className="text-3xl font-extrabold text-slate-900 mt-2">{unassignedRequests.length}</p>
-          <p className="text-[11px] text-amber-700 font-medium mt-1">Ready for ticket assignment</p>
+          <p className="text-2xl sm:text-3xl font-extrabold text-slate-900 mt-1 sm:mt-2">{unassignedRequests.length}</p>
+          <p className="text-[10px] sm:text-[11px] text-amber-700 font-medium mt-0.5 sm:mt-1 truncate">Ready for ticket assignment</p>
         </div>
 
-        <div className="bg-white p-5 rounded-xl border border-slate-200 shadow-sm hover:border-slate-300 transition">
+        <div className="bg-white p-3.5 sm:p-5 rounded-xl border border-slate-200 shadow-sm hover:border-slate-300 transition">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-bold text-slate-600 uppercase tracking-wider">
+            <span className="text-[10px] sm:text-xs font-bold text-slate-600 uppercase tracking-wider">
               My Active Queue
             </span>
-            <div className="p-2.5 rounded-lg bg-indigo-50 text-indigo-600">
-              <UserCheck className="w-4 h-4" />
+            <div className="p-2 sm:p-2.5 rounded-lg bg-indigo-50 text-indigo-600">
+              <UserCheck className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
             </div>
           </div>
-          <p className="text-3xl font-extrabold text-slate-900 mt-2">{myWorkRequests.length}</p>
-          <p className="text-[11px] text-slate-500 mt-1">Assigned directly to you</p>
+          <p className="text-2xl sm:text-3xl font-extrabold text-slate-900 mt-1 sm:mt-2">{myWorkRequests.length}</p>
+          <p className="text-[10px] sm:text-[11px] text-slate-500 mt-0.5 sm:mt-1 truncate">Assigned to you</p>
         </div>
 
-        <div className="bg-white p-5 rounded-xl border border-slate-200 shadow-sm hover:border-slate-300 transition">
+        <div className="bg-white p-3.5 sm:p-5 rounded-xl border border-slate-200 shadow-sm hover:border-slate-300 transition">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-bold text-slate-600 uppercase tracking-wider">
+            <span className="text-[10px] sm:text-xs font-bold text-slate-600 uppercase tracking-wider">
               In Progress
             </span>
-            <div className="p-2.5 rounded-lg bg-blue-50 text-blue-600">
-              <Clock className="w-4 h-4" />
+            <div className="p-2 sm:p-2.5 rounded-lg bg-blue-50 text-blue-600">
+              <Clock className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
             </div>
           </div>
-          <p className="text-3xl font-extrabold text-slate-900 mt-2">{inProgressRequests.length}</p>
-          <p className="text-[11px] text-slate-500 mt-1">Active fulfillment tasks</p>
+          <p className="text-2xl sm:text-3xl font-extrabold text-slate-900 mt-1 sm:mt-2">{inProgressRequests.length}</p>
+          <p className="text-[10px] sm:text-[11px] text-slate-500 mt-0.5 sm:mt-1 truncate">Active fulfillment tasks</p>
         </div>
 
-        <div className="bg-white p-5 rounded-xl border border-slate-200 shadow-sm hover:border-slate-300 transition">
+        <div className="bg-white p-3.5 sm:p-5 rounded-xl border border-slate-200 shadow-sm hover:border-slate-300 transition">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-bold text-slate-600 uppercase tracking-wider">
+            <span className="text-[10px] sm:text-xs font-bold text-slate-600 uppercase tracking-wider">
               Completed
             </span>
-            <div className="p-2.5 rounded-lg bg-emerald-50 text-emerald-600">
-              <CheckCircle2 className="w-4 h-4" />
+            <div className="p-2 sm:p-2.5 rounded-lg bg-emerald-50 text-emerald-600">
+              <CheckCircle2 className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
             </div>
           </div>
-          <p className="text-3xl font-extrabold text-slate-900 mt-2">{completedRequests.length}</p>
-          <p className="text-[11px] text-slate-500 mt-1">Closed successfully</p>
+          <p className="text-2xl sm:text-3xl font-extrabold text-slate-900 mt-1 sm:mt-2">{completedRequests.length}</p>
+          <p className="text-[10px] sm:text-[11px] text-slate-500 mt-0.5 sm:mt-1 truncate">Closed successfully</p>
         </div>
       </div>
 

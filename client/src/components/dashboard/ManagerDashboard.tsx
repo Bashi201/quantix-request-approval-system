@@ -114,13 +114,13 @@ export const ManagerDashboard: React.FC = () => {
   return (
     <div className="space-y-6">
       {/* Welcome Banner */}
-      <div className="bg-gradient-to-r from-indigo-700 via-indigo-600 to-indigo-800 rounded-2xl p-6 sm:p-8 text-white shadow-md flex flex-col sm:flex-row sm:items-center justify-between gap-6 border border-indigo-500/30">
+      <div className="bg-gradient-to-r from-indigo-700 via-indigo-600 to-indigo-800 rounded-2xl p-4 sm:p-6 lg:p-8 text-white shadow-md flex flex-col sm:flex-row sm:items-center justify-between gap-4 sm:gap-6 border border-indigo-500/30">
         <div>
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/15 text-indigo-100 text-xs font-semibold backdrop-blur-xs mb-3 border border-white/20">
+          <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 sm:px-3 sm:py-1 rounded-full bg-white/15 text-indigo-100 text-[11px] sm:text-xs font-semibold backdrop-blur-xs mb-2 sm:mb-3 border border-white/20">
             <ShieldCheck className="w-3.5 h-3.5" />
             Managerial Oversight Authority
           </div>
-          <h1 className="text-xl sm:text-2xl font-bold tracking-tight">
+          <h1 className="text-lg sm:text-2xl font-bold tracking-tight">
             Manager Review Portal — {user?.name}
           </h1>
           <p className="text-indigo-100 text-xs sm:text-sm mt-1 max-w-xl leading-relaxed">
@@ -128,64 +128,64 @@ export const ManagerDashboard: React.FC = () => {
           </p>
         </div>
 
-        <div className="bg-white/15 backdrop-blur-xs border border-white/25 px-6 py-3.5 rounded-2xl text-center shrink-0 shadow-xs">
-          <p className="text-3xl font-extrabold text-white">{pendingApprovals.length}</p>
-          <p className="text-xs text-indigo-100 font-semibold mt-0.5">Pending Review</p>
+        <div className="bg-white/15 backdrop-blur-xs border border-white/25 px-4 sm:px-6 py-2.5 sm:py-3.5 rounded-2xl text-center shrink-0 shadow-xs flex sm:flex-col items-center justify-between sm:justify-center">
+          <p className="text-2xl sm:text-3xl font-extrabold text-white">{pendingApprovals.length}</p>
+          <p className="text-[11px] sm:text-xs text-indigo-100 font-semibold mt-0.5">Pending Review</p>
         </div>
       </div>
 
       {/* Metrics Row */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        <div className="bg-white p-5 rounded-xl border border-slate-200 shadow-sm hover:border-slate-300 transition">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
+        <div className="bg-white p-3.5 sm:p-5 rounded-xl border border-slate-200 shadow-sm hover:border-slate-300 transition">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-bold text-slate-600 uppercase tracking-wider">
+            <span className="text-[10px] sm:text-xs font-bold text-slate-600 uppercase tracking-wider">
               Pending Decisions
             </span>
-            <div className="p-2.5 rounded-lg bg-amber-50 text-amber-600">
-              <Clock className="w-4 h-4" />
+            <div className="p-2 sm:p-2.5 rounded-lg bg-amber-50 text-amber-600">
+              <Clock className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
             </div>
           </div>
-          <p className="text-3xl font-extrabold text-slate-900 mt-2">{pendingApprovals.length}</p>
-          <p className="text-[11px] text-amber-700 font-medium mt-1">Requires immediate review</p>
+          <p className="text-2xl sm:text-3xl font-extrabold text-slate-900 mt-1 sm:mt-2">{pendingApprovals.length}</p>
+          <p className="text-[10px] sm:text-[11px] text-amber-700 font-medium mt-0.5 sm:mt-1 truncate">Requires review</p>
         </div>
 
-        <div className="bg-white p-5 rounded-xl border border-slate-200 shadow-sm hover:border-slate-300 transition">
+        <div className="bg-white p-3.5 sm:p-5 rounded-xl border border-slate-200 shadow-sm hover:border-slate-300 transition">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-bold text-slate-600 uppercase tracking-wider">
+            <span className="text-[10px] sm:text-xs font-bold text-slate-600 uppercase tracking-wider">
               Approved
             </span>
-            <div className="p-2.5 rounded-lg bg-emerald-50 text-emerald-600">
-              <CheckCircle2 className="w-4 h-4" />
+            <div className="p-2 sm:p-2.5 rounded-lg bg-emerald-50 text-emerald-600">
+              <CheckCircle2 className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
             </div>
           </div>
-          <p className="text-3xl font-extrabold text-slate-900 mt-2">{approvedRequests.length}</p>
-          <p className="text-[11px] text-slate-500 mt-1">Routed to Operations</p>
+          <p className="text-2xl sm:text-3xl font-extrabold text-slate-900 mt-1 sm:mt-2">{approvedRequests.length}</p>
+          <p className="text-[10px] sm:text-[11px] text-slate-500 mt-0.5 sm:mt-1 truncate">Routed to Ops</p>
         </div>
 
-        <div className="bg-white p-5 rounded-xl border border-slate-200 shadow-sm hover:border-slate-300 transition">
+        <div className="bg-white p-3.5 sm:p-5 rounded-xl border border-slate-200 shadow-sm hover:border-slate-300 transition">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-bold text-slate-600 uppercase tracking-wider">
+            <span className="text-[10px] sm:text-xs font-bold text-slate-600 uppercase tracking-wider">
               Returned
             </span>
-            <div className="p-2.5 rounded-lg bg-indigo-50 text-indigo-600">
-              <RotateCcw className="w-4 h-4" />
+            <div className="p-2 sm:p-2.5 rounded-lg bg-indigo-50 text-indigo-600">
+              <RotateCcw className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
             </div>
           </div>
-          <p className="text-3xl font-extrabold text-slate-900 mt-2">{returnedRequests.length}</p>
-          <p className="text-[11px] text-slate-500 mt-1">Returned for revision</p>
+          <p className="text-2xl sm:text-3xl font-extrabold text-slate-900 mt-1 sm:mt-2">{returnedRequests.length}</p>
+          <p className="text-[10px] sm:text-[11px] text-slate-500 mt-0.5 sm:mt-1 truncate">For revision</p>
         </div>
 
-        <div className="bg-white p-5 rounded-xl border border-slate-200 shadow-sm hover:border-slate-300 transition">
+        <div className="bg-white p-3.5 sm:p-5 rounded-xl border border-slate-200 shadow-sm hover:border-slate-300 transition">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-bold text-slate-600 uppercase tracking-wider">
+            <span className="text-[10px] sm:text-xs font-bold text-slate-600 uppercase tracking-wider">
               Rejected
             </span>
-            <div className="p-2.5 rounded-lg bg-rose-50 text-rose-600">
-              <XCircle className="w-4 h-4" />
+            <div className="p-2 sm:p-2.5 rounded-lg bg-rose-50 text-rose-600">
+              <XCircle className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
             </div>
           </div>
-          <p className="text-3xl font-extrabold text-slate-900 mt-2">{rejectedRequests.length}</p>
-          <p className="text-[11px] text-slate-500 mt-1">Declined requests</p>
+          <p className="text-2xl sm:text-3xl font-extrabold text-slate-900 mt-1 sm:mt-2">{rejectedRequests.length}</p>
+          <p className="text-[10px] sm:text-[11px] text-slate-500 mt-0.5 sm:mt-1 truncate">Declined orders</p>
         </div>
       </div>
 
