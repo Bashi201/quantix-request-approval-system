@@ -117,9 +117,8 @@ export const LoginPage: React.FC = () => {
 
       {/* 3D Blue Sphere 1: Top Left ambient orb */}
       <div
-        className={`fixed -top-32 -left-32 w-[280px] sm:w-[440px] h-[280px] sm:h-[440px] rounded-full z-1 pointer-events-none transition-all duration-1000 ease-out ${
-          isMounted ? 'opacity-40 scale-100' : 'opacity-0 scale-90'
-        }`}
+        className={`fixed -top-32 -left-32 w-[280px] sm:w-[440px] h-[280px] sm:h-[440px] rounded-full z-1 pointer-events-none transition-all duration-1000 ease-out ${isMounted ? 'opacity-40 scale-100' : 'opacity-0 scale-90'
+          }`}
         style={{
           background:
             'radial-gradient(circle at 35% 35%, #59adff 0%, #0267dd 60%, #003e9c 100%)',
@@ -128,9 +127,8 @@ export const LoginPage: React.FC = () => {
 
       {/* 3D Blue Sphere 2: Massive bottom-left glowing orb */}
       <div
-        className={`fixed -bottom-28 -left-20 w-[300px] sm:w-[480px] h-[300px] sm:h-[480px] rounded-full z-1 pointer-events-none transition-all duration-1000 delay-100 ease-out ${
-          isMounted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-16'
-        }`}
+        className={`fixed -bottom-28 -left-20 w-[300px] sm:w-[480px] h-[300px] sm:h-[480px] rounded-full z-1 pointer-events-none transition-all duration-1000 delay-100 ease-out ${isMounted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-16'
+          }`}
         style={{
           background:
             'radial-gradient(circle at 32% 28%, #41a6ff 0%, #066de4 45%, #013f93 85%, #002766 100%)',
@@ -141,9 +139,8 @@ export const LoginPage: React.FC = () => {
 
       {/* 3D Blue Sphere 3: Overlapping bright front orb */}
       <div
-        className={`fixed bottom-2 left-32 sm:left-64 w-40 sm:w-72 h-40 sm:h-72 rounded-full z-2 pointer-events-none transition-all duration-1000 delay-200 ease-out ${
-          isMounted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'
-        }`}
+        className={`fixed bottom-2 left-32 sm:left-64 w-40 sm:w-72 h-40 sm:h-72 rounded-full z-2 pointer-events-none transition-all duration-1000 delay-200 ease-out ${isMounted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'
+          }`}
         style={{
           background:
             'radial-gradient(circle at 30% 30%, #6ec0ff 0%, #1e8aff 40%, #025fc9 85%, #003780 100%)',
@@ -154,9 +151,8 @@ export const LoginPage: React.FC = () => {
 
       {/* 3D Blue Sphere 4: Bottom-right corner orb */}
       <div
-        className={`fixed -bottom-24 -right-16 w-48 sm:w-80 h-48 sm:h-80 rounded-full z-1 pointer-events-none transition-all duration-1000 delay-300 ease-out ${
-          isMounted ? 'opacity-85 translate-y-0' : 'opacity-0 translate-y-16'
-        }`}
+        className={`fixed -bottom-24 -right-16 w-48 sm:w-80 h-48 sm:h-80 rounded-full z-1 pointer-events-none transition-all duration-1000 delay-300 ease-out ${isMounted ? 'opacity-85 translate-y-0' : 'opacity-0 translate-y-16'
+          }`}
         style={{
           background:
             'radial-gradient(circle at 35% 35%, #4bb0ff 0%, #0266da 55%, #003882 100%)',
@@ -204,9 +200,8 @@ export const LoginPage: React.FC = () => {
             LEFT COLUMN: HERO SECTION (COMPACT ON MOBILE)
            ======================================================== */}
         <div
-          className={`w-full lg:flex-1 text-white max-w-2xl text-center lg:text-left transition-all duration-700 ease-out ${
-            isMounted ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-10'
-          }`}
+          className={`w-full lg:flex-1 text-white max-w-2xl text-center lg:text-left transition-all duration-700 ease-out ${isMounted ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-10'
+            }`}
         >
           {/* Brand Tag Pill */}
           <div className="inline-flex items-center px-3 py-1 rounded-full bg-white/15 backdrop-blur-md border border-white/20 text-[10px] sm:text-xs font-semibold text-blue-100 mb-1.5 sm:mb-4 shadow-sm">
@@ -286,9 +281,8 @@ export const LoginPage: React.FC = () => {
             RIGHT COLUMN: FLOATING CLEAN WHITE SIGN IN CARD
            ======================================================== */}
         <div
-          className={`w-full max-w-[440px] shrink-0 transition-all duration-700 delay-150 ease-out ${
-            isMounted ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 translate-y-8 scale-95'
-          }`}
+          className={`w-full max-w-[440px] shrink-0 transition-all duration-700 delay-150 ease-out ${isMounted ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 translate-y-8 scale-95'
+            }`}
         >
           <div className="bg-white rounded-2xl sm:rounded-[32px] p-5 sm:p-8 shadow-2xl border border-white/80 space-y-4 sm:space-y-5">
             {/* Header */}
@@ -559,12 +553,12 @@ export const LoginPage: React.FC = () => {
          ======================================================== */}
       <footer className="relative z-10 w-full max-w-7xl mx-auto pt-3 sm:pt-6 border-t border-white/15 flex flex-col md:flex-row items-center justify-between gap-2 sm:gap-4 text-xs text-blue-100/80">
         <p className="text-center md:text-left text-[10px] sm:text-xs">
-          © 2026 Quantix Enterprise Systems • Service Governance Platform
+          © 2026 Bhashitha Wansinghe • Service Governance Platform
         </p>
 
         <div className="flex items-center gap-3 sm:gap-4 text-[10px] sm:text-[11px]">
           <span className="hover:text-white transition-colors cursor-pointer">
-            Support: support@quantix.io
+            Support: bashithawanasinghe111@gmail.com
           </span>
           <span>•</span>
           <span className="hover:text-white transition-colors cursor-pointer">Security</span>
