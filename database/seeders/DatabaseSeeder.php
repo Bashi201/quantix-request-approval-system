@@ -8,6 +8,10 @@ use App\Models\RequestActivity;
 use App\Models\RequestComment;
 use App\Models\ServiceRequest;
 use App\Models\User;
+use App\Notifications\RequestAssignedNotification;
+use App\Notifications\RequestDecisionNotification;
+use App\Notifications\RequestStatusUpdatedNotification;
+use App\Notifications\RequestSubmittedNotification;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 
@@ -377,5 +381,52 @@ class DatabaseSeeder extends Seeder
             'comment' => 'Submitted replacement request.',
             'created_at' => now()->subHours(2),
         ]);
+
+        // 6. Seed In-App Notifications for Realistic Personas & Testing
+        // Alice Smith (Employee): Receives status decision and fulfillment alerts
+        $alice->notifyNow(new RequestDecisionNotification(
+            $req3,
+            'returned',
+            $manager,
+            'Please verify with vendor whether educational pricing or corporate license discount is applicable before resubmitting.'
+        ));
+
+        $alice->notifyNow(new RequestDecisionNotification(
+            $req4,
+            'approved',
+            $manager,
+            'Approved under Q4 engineering ergonomic equipment allowance.'
+        ));
+
+        $alice->notifyNow(new RequestAssignedNotification(
+            $req5,
+            $oscar,
+            $oscar
+        ));
+
+        $alice->notifyNow(new RequestStatusUpdatedNotification(
+            $req6,
+            RequestStatus::Completed,
+            $oscar,
+            'GitHub Enterprise organization invite accepted and developer license seat confirmed active.'
+        ));
+
+        // Sarah Connor (Manager): Receives alerts for pending submissions
+        $manager->notifyNow(new RequestSubmittedNotification($req2));
+        $manager->notifyNow(new RequestSubmittedNotification($req7));
+
+        // Oscar Martinez (Operations): Receives alerts for approved requests and assigned tickets
+        $oscar->notifyNow(new RequestDecisionNotification(
+            $req4,
+            'approved',
+            $manager,
+            'Approved by manager and routed to Operations fulfillment queue.'
+        ));
+
+        $oscar->notifyNow(new RequestAssignedNotification(
+            $req5,
+            $oscar,
+            $oscar
+        ));
     }
 }
