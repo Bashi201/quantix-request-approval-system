@@ -44,28 +44,43 @@ export const ToastProvider: React.FC<{ children: React.ReactNode }> = ({ childre
   return (
     <ToastContext.Provider value={{ toast }}>
       {children}
-      {/* Toast container */}
-      <div className="fixed bottom-5 right-5 z-50 flex flex-col gap-2 max-w-md w-full pointer-events-none">
+      {/* Toast container: responsive padding and width */}
+      <div className="fixed bottom-4 left-4 right-4 sm:left-auto sm:right-6 sm:bottom-6 z-50 flex flex-col gap-2.5 max-w-sm sm:w-auto pointer-events-none">
         {toasts.map((t) => (
           <div
             key={t.id}
-            className={`pointer-events-auto flex items-start gap-3 p-4 rounded-lg shadow-lg border text-sm transition-all duration-300 animate-in slide-in-from-bottom-2 ${
+            className={`pointer-events-auto flex items-center justify-between gap-3 px-4 py-3 rounded-2xl shadow-xl border text-xs sm:text-sm font-medium backdrop-blur-md transition-all duration-300 animate-in slide-in-from-bottom-2 ${
               t.type === 'success'
-                ? 'bg-emerald-50 text-emerald-900 border-emerald-200'
+                ? 'bg-emerald-50/95 text-emerald-900 border-emerald-300/80 shadow-emerald-950/10'
                 : t.type === 'error'
-                ? 'bg-rose-50 text-rose-900 border-rose-200'
-                : 'bg-indigo-50 text-indigo-900 border-indigo-200'
+                ? 'bg-rose-50/95 text-rose-900 border-rose-300/80 shadow-rose-950/10'
+                : 'bg-indigo-50/95 text-indigo-900 border-indigo-300/80 shadow-indigo-950/10'
             }`}
           >
-            {t.type === 'success' && <CheckCircle className="w-5 h-5 text-emerald-600 shrink-0 mt-0.5" />}
-            {t.type === 'error' && <AlertCircle className="w-5 h-5 text-rose-600 shrink-0 mt-0.5" />}
-            {t.type === 'info' && <Info className="w-5 h-5 text-indigo-600 shrink-0 mt-0.5" />}
-            <span className="flex-1 font-medium leading-snug">{t.message}</span>
+            <div className="flex items-center gap-2.5 min-w-0">
+              {t.type === 'success' && (
+                <div className="w-6 h-6 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center shrink-0">
+                  <CheckCircle className="w-4 h-4" />
+                </div>
+              )}
+              {t.type === 'error' && (
+                <div className="w-6 h-6 rounded-full bg-rose-100 text-rose-600 flex items-center justify-center shrink-0">
+                  <AlertCircle className="w-4 h-4" />
+                </div>
+              )}
+              {t.type === 'info' && (
+                <div className="w-6 h-6 rounded-full bg-indigo-100 text-indigo-600 flex items-center justify-center shrink-0">
+                  <Info className="w-4 h-4" />
+                </div>
+              )}
+              <span className="truncate leading-snug">{t.message}</span>
+            </div>
             <button
               onClick={() => removeToast(t.id)}
-              className="text-slate-400 hover:text-slate-700 transition"
+              className="p-1 text-slate-400 hover:text-slate-700 hover:bg-black/5 rounded-lg transition shrink-0 ml-1"
+              aria-label="Dismiss toast"
             >
-              <X className="w-4 h-4" />
+              <X className="w-3.5 h-3.5" />
             </button>
           </div>
         ))}

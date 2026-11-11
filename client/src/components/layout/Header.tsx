@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Menu, Layers, Calendar, Clock } from 'lucide-react';
+import { Menu, Layers, Calendar, Clock, ShieldCheck } from 'lucide-react';
 import { NotificationDropdown } from './NotificationDropdown';
 import { UserMenu } from './UserMenu';
 
@@ -31,50 +31,57 @@ export const Header: React.FC<HeaderProps> = ({ onToggleSidebar }) => {
   });
 
   return (
-    <header className="h-16 bg-white border-b border-slate-200 px-3 sm:px-6 flex items-center justify-between sticky top-0 z-40 shadow-xs">
+    <header className="h-16 w-full bg-white/95 backdrop-blur-md border-b border-slate-200/90 px-4 sm:px-6 flex items-center justify-between sticky top-0 z-40 shadow-xs shrink-0 select-none">
       {/* Left: Mobile Toggle & Brand */}
-      <div className="flex items-center gap-2.5 sm:gap-3">
+      <div className="flex items-center gap-3">
         <button
           onClick={onToggleSidebar}
           aria-label="Toggle navigation menu"
-          className="lg:hidden p-2 text-slate-600 hover:text-slate-900 hover:bg-slate-100 rounded-lg transition"
+          className="lg:hidden p-2 text-slate-600 hover:text-slate-900 hover:bg-slate-100 rounded-xl transition"
         >
           <Menu className="w-5 h-5" />
         </button>
 
-        <div className="flex items-center gap-2.5">
-          <div className="w-8 h-8 rounded-xl bg-indigo-600 text-white flex items-center justify-center shadow-sm shrink-0">
-            <Layers className="w-4 h-4" />
+        <div className="flex items-center gap-3">
+          <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-indigo-600 via-indigo-600 to-violet-500 text-white flex items-center justify-center shadow-md shadow-indigo-500/25 shrink-0 ring-2 ring-indigo-50">
+            <Layers className="w-5 h-5" />
           </div>
           <div className="flex flex-col">
-            <span className="font-extrabold text-sm sm:text-base text-slate-900 tracking-tight leading-none">
-              Quantix
-            </span>
-            <span className="text-[10px] text-slate-500 font-medium hidden sm:inline leading-tight">
-              Enterprise Service Platform
+            <div className="flex items-center gap-2">
+              <span className="font-black text-base text-slate-900 tracking-tight leading-none font-heading">
+                Quantix
+              </span>
+              <span className="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-extrabold uppercase tracking-wider bg-indigo-50 text-indigo-700 border border-indigo-100">
+                Enterprise
+              </span>
+            </div>
+            <span className="text-[11px] text-slate-400 font-medium hidden sm:inline leading-tight mt-0.5">
+              Service Request &amp; Workflow Governance
             </span>
           </div>
         </div>
       </div>
 
       {/* Center: Live Date & Time Display */}
-      <div className="hidden md:flex items-center gap-2 px-3.5 py-1.5 rounded-xl bg-slate-50 border border-slate-200 text-xs text-slate-700 shadow-2xs">
+      <div className="hidden md:flex items-center gap-3 px-4 py-1.5 rounded-full bg-slate-50 border border-slate-200/80 text-xs text-slate-700 shadow-2xs">
         <div className="flex items-center gap-1.5 font-medium text-slate-600">
+          <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
           <Calendar className="w-3.5 h-3.5 text-indigo-600 shrink-0" />
           <span>{formattedDate}</span>
         </div>
-        <span className="text-slate-300 font-semibold">•</span>
-        <div className="flex items-center gap-1.5 font-bold text-slate-900 font-mono">
+        <span className="text-slate-300 font-bold">•</span>
+        <div className="flex items-center gap-1.5 font-bold text-slate-900 font-mono tabular-nums">
           <Clock className="w-3.5 h-3.5 text-indigo-600 shrink-0" />
           <span>{formattedTime}</span>
         </div>
       </div>
 
       {/* Right: Notifications & User Profile Menu */}
-      <div className="flex items-center gap-1.5 sm:gap-3">
-        {/* Compact time on mobile */}
-        <div className="md:hidden flex items-center gap-1 text-[11px] font-mono text-slate-500 px-2 py-1 rounded bg-slate-50 border border-slate-100">
-          <Clock className="w-3 h-3 text-indigo-500" />
+      <div className="flex items-center gap-2 sm:gap-4">
+        {/* Compact time on small mobile */}
+        <div className="md:hidden flex items-center gap-1 text-[11px] font-mono tabular-nums text-slate-600 px-2.5 py-1 rounded-full bg-slate-50 border border-slate-200/80">
+          <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+          <Clock className="w-3 h-3 text-indigo-600 shrink-0" />
           <span>
             {currentDateTime.toLocaleTimeString(undefined, {
               hour: '2-digit',
