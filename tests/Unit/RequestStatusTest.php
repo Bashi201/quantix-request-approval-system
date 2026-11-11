@@ -50,7 +50,7 @@ class RequestStatusTest extends TestCase
     public function test_request_status_labels(): void
     {
         $this->assertSame('Draft', RequestStatus::Draft->label());
-        $this->assertSame('Submitted', RequestStatus::Submitted->label());
+        $this->assertSame('Pending Approval', RequestStatus::Submitted->label());
         $this->assertSame('Returned', RequestStatus::Returned->label());
         $this->assertSame('Approved', RequestStatus::Approved->label());
         $this->assertSame('In Progress', RequestStatus::InProgress->label());
