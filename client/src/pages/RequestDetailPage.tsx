@@ -4,6 +4,7 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { api } from '@/lib/api';
 import { useAuth } from '@/context/AuthContext';
 import { useToast } from '@/context/ToastContext';
+import { useCreateModal } from '@/context/CreateModalContext';
 import type { ServiceRequest, RequestComment, RequestActivity } from '@/types';
 import { StatusBadge } from '@/components/common/StatusBadge';
 import { PriorityBadge } from '@/components/common/PriorityBadge';
@@ -34,6 +35,7 @@ export const RequestDetailPage: React.FC = () => {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   const { user, isEmployee, isManager, isOperations } = useAuth();
+  const { openEditModal } = useCreateModal();
   const toast = useToast();
 
   const [commentText, setCommentText] = useState('');
@@ -184,13 +186,14 @@ export const RequestDetailPage: React.FC = () => {
         <div className="flex flex-wrap items-center gap-2">
           {canSubmit && (
             <>
-              <Link
-                to={`/requests/${request.id}/edit`}
-                className="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg border border-slate-300 bg-white text-slate-700 hover:bg-slate-50 text-xs sm:text-sm font-medium shadow-sm transition"
+              <button
+                type="button"
+                onClick={() => openEditModal(request.id)}
+                className="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg border border-slate-300 bg-white text-slate-700 hover:bg-slate-50 text-xs sm:text-sm font-semibold shadow-xs transition cursor-pointer"
               >
                 <Edit className="w-4 h-4" />
                 Edit Request
-              </Link>
+              </button>
 
               <Button
                 onClick={() =>

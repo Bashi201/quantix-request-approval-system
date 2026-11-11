@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { useAuth } from '@/context/AuthContext';
+import { useCreateModal } from '@/context/CreateModalContext';
 import { api } from '@/lib/api';
 import type { PaginatedResponse, ServiceRequest, RequestStatus, RequestPriority } from '@/types';
 import { DataTable, type Column } from '@/components/common/DataTable';
@@ -17,6 +18,7 @@ import { PlusCircle, Eye } from 'lucide-react';
 
 export const RequestsListPage: React.FC = () => {
   const { isEmployee } = useAuth();
+  const { openCreateModal } = useCreateModal();
   const [searchParams, setSearchParams] = useSearchParams();
 
   const page = parseInt(searchParams.get('page') || '1', 10);
@@ -153,18 +155,19 @@ export const RequestsListPage: React.FC = () => {
         </div>
 
         {isEmployee && (
-          <Link
-            to="/requests/new"
-            className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-semibold text-xs sm:text-sm shadow-sm transition"
+          <button
+            type="button"
+            onClick={openCreateModal}
+            className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-semibold text-xs sm:text-sm shadow-sm hover:shadow transition cursor-pointer"
           >
             <PlusCircle className="w-4 h-4" />
             Create Request
-          </Link>
+          </button>
         )}
       </div>
 
       {/* Filter and Search Bar */}
-      <div className="bg-white p-4 rounded-xl border border-slate-200/80 shadow-xs flex flex-col md:flex-row gap-3 items-stretch md:items-center justify-between">
+      <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex flex-col md:flex-row gap-3 items-stretch md:items-center justify-between">
         <div className="w-full md:w-80">
           <SearchInput
             placeholder="Search by title or #..."
@@ -208,7 +211,7 @@ export const RequestsListPage: React.FC = () => {
               : 'You have no service requests in your queue at this moment.'
           }
           actionLabel={isEmployee ? 'Create Your First Request' : undefined}
-          onAction={isEmployee ? () => (window.location.href = '/requests/new') : undefined}
+          onAction={isEmployee ? openCreateModal : undefined}
         />
       ) : (
         <div className="space-y-4">
