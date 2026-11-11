@@ -15,7 +15,8 @@ use Illuminate\Validation\ValidationException;
 class ServiceRequestService
 {
     public function __construct(
-        protected RequestWorkflowService $workflowService
+        protected RequestWorkflowService $workflowService,
+        protected NotificationService $notificationService
     ) {}
 
     /**
@@ -102,6 +103,8 @@ class ServiceRequestService
                     'comment' => 'Request submitted for manager review.',
                     'created_at' => now(),
                 ]);
+
+                $this->notificationService->notifySubmitted($request, $creator);
             }
 
             return $request->fresh(['requester', 'assignedTo', 'activities.user', 'comments.user']);
@@ -179,6 +182,8 @@ class ServiceRequestService
                 ],
                 'created_at' => now(),
             ]);
+
+            $this->notificationService->notifyAssigned($request, $assignedUser, $actor);
 
             return $request->fresh(['requester', 'assignedTo', 'activities.user', 'comments.user']);
         });

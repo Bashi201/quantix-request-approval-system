@@ -10,6 +10,7 @@ use App\Http\Requests\WorkflowDecisionRequest;
 use App\Http\Resources\ServiceRequestResource;
 use App\Models\ServiceRequest;
 use App\Models\User;
+use App\Services\NotificationService;
 use App\Services\RequestWorkflowService;
 use App\Services\ServiceRequestService;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
@@ -22,7 +23,8 @@ class RequestWorkflowController extends Controller
 
     public function __construct(
         protected RequestWorkflowService $workflowService,
-        protected ServiceRequestService $requestService
+        protected ServiceRequestService $requestService,
+        protected NotificationService $notificationService
     ) {}
 
     /**
@@ -38,6 +40,8 @@ class RequestWorkflowController extends Controller
             $request->user(),
             'Submitted for manager review.'
         );
+
+        $this->notificationService->notifySubmitted($updated, $request->user());
 
         return response()->json([
             'success' => true,
@@ -68,6 +72,13 @@ class RequestWorkflowController extends Controller
         $updated = $this->workflowService->transition(
             $serviceRequest,
             $targetStatus,
+            $request->user(),
+            $request->validated('comment')
+        );
+
+        $this->notificationService->notifyDecision(
+            $updated,
+            $actionVerb,
             $request->user(),
             $request->validated('comment')
         );
@@ -112,6 +123,13 @@ class RequestWorkflowController extends Controller
 
         $updated = $this->workflowService->transition(
             $serviceRequest,
+            $targetStatus,
+            $request->user(),
+            $request->validated('comment')
+        );
+
+        $this->notificationService->notifyStatusUpdated(
+            $updated,
             $targetStatus,
             $request->user(),
             $request->validated('comment')
