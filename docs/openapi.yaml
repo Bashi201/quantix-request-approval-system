@@ -325,3 +325,4 @@ components:
       type: http
       scheme: bearer
       bearerFormat: Sanctum
+
