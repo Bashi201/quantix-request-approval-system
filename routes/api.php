@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\NotificationController;
 use App\Http\Controllers\Api\RequestCommentController;
 use App\Http\Controllers\Api\RequestWorkflowController;
 use App\Http\Controllers\Api\ServiceRequestController;
@@ -44,4 +45,9 @@ Route::middleware('auth:sanctum')->group(function () {
 
     // Threaded Participant Discourse
     Route::post('/requests/{serviceRequest}/comments', [RequestCommentController::class, 'store'])->name('api.requests.comments.store');
+
+    // In-App Notifications
+    Route::get('/notifications', [NotificationController::class, 'index'])->name('api.notifications.index');
+    Route::patch('/notifications/{id}/read', [NotificationController::class, 'markAsRead'])->name('api.notifications.read');
+    Route::post('/notifications/read-all', [NotificationController::class, 'markAllAsRead'])->name('api.notifications.read_all');
 });
