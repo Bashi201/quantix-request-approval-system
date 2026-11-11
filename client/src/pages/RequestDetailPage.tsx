@@ -26,6 +26,7 @@ import {
   PlayCircle,
   CheckCheck,
   UserCheck,
+  Edit,
 } from 'lucide-react';
 
 export const RequestDetailPage: React.FC = () => {
@@ -182,20 +183,30 @@ export const RequestDetailPage: React.FC = () => {
         {/* Action Buttons Toolbar */}
         <div className="flex flex-wrap items-center gap-2">
           {canSubmit && (
-            <Button
-              onClick={() =>
-                setModalState({
-                  isOpen: true,
-                  title: 'Submit Request for Approval',
-                  description:
-                    'Your assigned manager will be notified immediately to review this request.',
-                  actionType: 'submit',
-                })
-              }
-            >
-              <Send className="w-4 h-4 mr-1.5" />
-              Submit for Approval
-            </Button>
+            <>
+              <Link
+                to={`/requests/${request.id}/edit`}
+                className="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg border border-slate-300 bg-white text-slate-700 hover:bg-slate-50 text-xs sm:text-sm font-medium shadow-sm transition"
+              >
+                <Edit className="w-4 h-4" />
+                Edit Request
+              </Link>
+
+              <Button
+                onClick={() =>
+                  setModalState({
+                    isOpen: true,
+                    title: 'Submit Request for Approval',
+                    description:
+                      'Your assigned manager will be notified immediately to review this request.',
+                    actionType: 'submit',
+                  })
+                }
+              >
+                <Send className="w-4 h-4 mr-1.5" />
+                Submit for Approval
+              </Button>
+            </>
           )}
 
           {canManagerDecide && (

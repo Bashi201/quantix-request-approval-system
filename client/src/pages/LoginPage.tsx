@@ -115,7 +115,7 @@ export const LoginPage: React.FC = () => {
             <div className="space-y-2">
               <button
                 type="button"
-                onClick={() => handleQuickLogin('alice@example.com')}
+                onClick={() => handleQuickLogin('alice.dev@quantix.io')}
                 className="w-full flex items-center justify-between p-2.5 rounded-lg border border-slate-200 hover:border-indigo-300 hover:bg-indigo-50/50 text-left transition group"
               >
                 <div className="flex items-center gap-2.5">
@@ -123,8 +123,8 @@ export const LoginPage: React.FC = () => {
                     <User className="w-3.5 h-3.5" />
                   </div>
                   <div>
-                    <p className="text-xs font-semibold text-slate-800">Alice Johnson</p>
-                    <p className="text-[11px] text-slate-400">alice@example.com</p>
+                    <p className="text-xs font-semibold text-slate-800">Alice Smith</p>
+                    <p className="text-[11px] text-slate-400">alice.dev@quantix.io</p>
                   </div>
                 </div>
                 <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-blue-50 text-blue-700 border border-blue-200">
@@ -134,7 +134,7 @@ export const LoginPage: React.FC = () => {
 
               <button
                 type="button"
-                onClick={() => handleQuickLogin('sarah@example.com')}
+                onClick={() => handleQuickLogin('sarah.manager@quantix.io')}
                 className="w-full flex items-center justify-between p-2.5 rounded-lg border border-slate-200 hover:border-indigo-300 hover:bg-indigo-50/50 text-left transition group"
               >
                 <div className="flex items-center gap-2.5">
@@ -143,7 +143,7 @@ export const LoginPage: React.FC = () => {
                   </div>
                   <div>
                     <p className="text-xs font-semibold text-slate-800">Sarah Connor</p>
-                    <p className="text-[11px] text-slate-400">sarah@example.com</p>
+                    <p className="text-[11px] text-slate-400">sarah.manager@quantix.io</p>
                   </div>
                 </div>
                 <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-indigo-50 text-indigo-700 border border-indigo-200">
@@ -153,7 +153,7 @@ export const LoginPage: React.FC = () => {
 
               <button
                 type="button"
-                onClick={() => handleQuickLogin('oscar@example.com')}
+                onClick={() => handleQuickLogin('oscar.ops@quantix.io')}
                 className="w-full flex items-center justify-between p-2.5 rounded-lg border border-slate-200 hover:border-indigo-300 hover:bg-indigo-50/50 text-left transition group"
               >
                 <div className="flex items-center gap-2.5">
@@ -162,7 +162,7 @@ export const LoginPage: React.FC = () => {
                   </div>
                   <div>
                     <p className="text-xs font-semibold text-slate-800">Oscar Martinez</p>
-                    <p className="text-[11px] text-slate-400">oscar@example.com</p>
+                    <p className="text-[11px] text-slate-400">oscar.ops@quantix.io</p>
                   </div>
                 </div>
                 <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-emerald-50 text-emerald-700 border border-emerald-200">

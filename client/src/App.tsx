@@ -11,6 +11,7 @@ import { LoginPage } from '@/pages/LoginPage';
 import { DashboardPage } from '@/pages/DashboardPage';
 import { RequestsListPage } from '@/pages/RequestsListPage';
 import { CreateRequestPage } from '@/pages/CreateRequestPage';
+import { EditRequestPage } from '@/pages/EditRequestPage';
 import { RequestDetailPage } from '@/pages/RequestDetailPage';
 import { OperationsTeamPage } from '@/pages/OperationsTeamPage';
 import { NotFoundPage } from '@/pages/NotFoundPage';
@@ -35,6 +36,14 @@ export function App() {
                     element={
                       <ProtectedRoute allowedRoles={['employee']}>
                         <CreateRequestPage />
+                      </ProtectedRoute>
+                    }
+                  />
+                  <Route
+                    path="requests/:id/edit"
+                    element={
+                      <ProtectedRoute allowedRoles={['employee']}>
+                        <EditRequestPage />
                       </ProtectedRoute>
                     }
                   />

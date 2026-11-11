@@ -9,6 +9,9 @@ import {
   Users,
   X,
   Sparkles,
+  Inbox,
+  Clock,
+  CheckCircle2,
 } from 'lucide-react';
 
 interface SidebarProps {
@@ -56,43 +59,86 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
           </p>
           <div className="flex items-center justify-between mt-1">
             <span className="text-xs font-bold text-slate-800 truncate">{user?.name}</span>
-            <span className="text-[10px] uppercase font-bold px-1.5 py-0.5 rounded bg-indigo-100 text-indigo-700">
+            <span
+              className={`text-[10px] uppercase font-bold px-1.5 py-0.5 rounded ${
+                isEmployee
+                  ? 'bg-blue-100 text-blue-700'
+                  : isManager
+                  ? 'bg-indigo-100 text-indigo-700'
+                  : 'bg-emerald-100 text-emerald-700'
+              }`}
+            >
               {role}
             </span>
           </div>
         </div>
 
-        {/* Nav Links */}
+        {/* Role-Specific Nav Links */}
         <nav className="flex-1 p-3 space-y-1 overflow-y-auto">
+          {/* Dashboard link for all */}
           <NavLink to="/" className={navItemClass} onClick={onClose} end>
             <LayoutDashboard className="w-4 h-4 shrink-0 text-slate-400" />
             Dashboard
           </NavLink>
 
-          <NavLink to="/requests" className={navItemClass} onClick={onClose}>
-            <FileText className="w-4 h-4 shrink-0 text-slate-400" />
-            {isEmployee ? 'My Service Requests' : 'All Service Requests'}
-          </NavLink>
-
+          {/* Employee Navigation */}
           {isEmployee && (
-            <NavLink to="/requests/new" className={navItemClass} onClick={onClose}>
-              <PlusCircle className="w-4 h-4 shrink-0 text-indigo-600" />
-              New Service Request
-            </NavLink>
+            <>
+              <NavLink to="/requests" className={navItemClass} onClick={onClose}>
+                <FileText className="w-4 h-4 shrink-0 text-slate-400" />
+                My Service Requests
+              </NavLink>
+
+              <NavLink to="/requests/new" className={navItemClass} onClick={onClose}>
+                <PlusCircle className="w-4 h-4 shrink-0 text-indigo-600" />
+                New Service Request
+              </NavLink>
+            </>
           )}
 
+          {/* Manager Navigation */}
           {isManager && (
-            <NavLink to="/requests?status=submitted" className={navItemClass} onClick={onClose}>
-              <CheckSquare className="w-4 h-4 shrink-0 text-blue-600" />
-              Pending Team Reviews
-            </NavLink>
+            <>
+              <NavLink to="/requests?status=submitted" className={navItemClass} onClick={onClose}>
+                <CheckSquare className="w-4 h-4 shrink-0 text-amber-600" />
+                Pending Approvals
+              </NavLink>
+
+              <NavLink to="/requests" className={navItemClass} onClick={onClose}>
+                <FileText className="w-4 h-4 shrink-0 text-slate-400" />
+                Team Requests
+              </NavLink>
+
+              <NavLink to="/users/operations" className={navItemClass} onClick={onClose}>
+                <Users className="w-4 h-4 shrink-0 text-slate-400" />
+                Operations Staff
+              </NavLink>
+            </>
           )}
 
+          {/* Operations Navigation */}
           {isOperations && (
-            <NavLink to="/users/operations" className={navItemClass} onClick={onClose}>
-              <Users className="w-4 h-4 shrink-0 text-emerald-600" />
-              Operations Team
-            </NavLink>
+            <>
+              <NavLink to="/requests?status=approved" className={navItemClass} onClick={onClose}>
+                <Inbox className="w-4 h-4 shrink-0 text-amber-600" />
+                Unassigned Queue
+              </NavLink>
+
+              <NavLink to="/requests?status=in_progress" className={navItemClass} onClick={onClose}>
+                <Clock className="w-4 h-4 shrink-0 text-blue-600" />
+                In Progress Work
+              </NavLink>
+
+              <NavLink to="/requests" className={navItemClass} onClick={onClose}>
+                <FileText className="w-4 h-4 shrink-0 text-slate-400" />
+                All Fulfillment Orders
+              </NavLink>
+
+              <NavLink to="/users/operations" className={navItemClass} onClick={onClose}>
+                <Users className="w-4 h-4 shrink-0 text-emerald-600" />
+                Operations Team
+              </NavLink>
+            </>
           )}
         </nav>
 
